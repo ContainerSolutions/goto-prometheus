@@ -1,0 +1,45 @@
+version: "3"
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - 9090:9090
+    networks:
+      - network
+  redis:
+    image: redis:4.0-alpine
+    networks:
+      - network
+  redis-exporter:
+    image: oliver006/redis_exporter
+    command:
+      - "--redis.addr=redis://redis:6379"
+    ports:
+      - 9121:9121
+    networks:
+      - network
+  load-test:
+    image: clue/redis-benchmark
+    environment:
+      - REDIS_PORT=6379
+    command:
+      - "-n"
+      - "10000000"
+      - "-h"
+      - "redis"
+      - "-d"
+      - "100"
+    networks:
+      - network
+networks:
+  network:
+volumes:
+    prometheus_data: {}
+
+

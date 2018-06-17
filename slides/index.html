@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Developer Data Science (Advanced)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/remark/0.14.0/remark.min.js"
+            integrity="sha256-0X/1LAQXsFEroxwOPcmqpxmSq3jj0c3+cw1yih2u+tY="
+            crossorigin="anonymous">
+
+    </script>
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"
+            integrity="sha256-fCth3p2B4cZMzlr7OFizmo5RkdJAHJ4vOHpE7FaNcR8="
+            crossorigin="anonymous">
+    </script>
+    <script type="text/x-mathjax-config">
+    // Setup MathJax
+    MathJax.Hub.Config({
+        tex2jax: {
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+            inlineMath: [['$','$'], ['\\(','\\)']]
+        },
+        TeX: { equationNumbers: { autoNumber: "all" } },
+    });
+    </script>
+    <script type="text/javascript">
+        /**
+         * Returns an img tag using the parameter as either percentage or exact value
+         * Usage:
+         *  .center[![:image 300px](images/master-2-slaves.png)]
+         *  ![:image 99%](images/migration-process.png)
+         * @param {int} scale - value of scale
+         * @object {this} content - path to image.
+         */
+        remark.macros.image = function (xscale, yscale) {
+            var url = this;
+            var img = document.createElement('img');
+            img.src = url;
+
+            if (xscale != undefined && xscale != "")
+                img.style.width = xscale;
+
+            if (yscale != undefined && yscale != "")
+                img.style.height = yscale;
+
+            return img.outerHTML;
+        }
+        remark.macros.scale = function (percentage) {
+            var url = this;
+            return '<img src="' + url + '" style="width: ' + percentage + '" />';
+            // Usage:
+            //   ![:scale 50%](image.jpg)
+            // Outputs:
+            //   <img src="image.jpg" style="width: 50%" />
+        };
+        remark.macros.include = function () {
+            var url = this;
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open('GET', this, false);
+            xmlhttp.send();
+            return xmlhttp.responseText;
+        };
+    </script>
+    <script type="text/javascript">
+        window.addEventListener("load", function(event) {
+            var tbls = document.getElementsByTagName('table');
+            for (i = 0; i < tbls.length; i++) {
+                tbls[i].className = 'col col-6 push-center bordered';
+            }
+            var ps = document.getElementsByTagName('p');
+            for (i = 0; i < ps.length; i++) {
+                ps[i].className = 'large';
+            }
+        });
+    </script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/kube/6.5.2/css/kube.min.css"
+          integrity="sha256-Az61WFtkbo/P92H8CRttXjlodhTsZZD7Oln7WtwKVX4="
+          crossorigin="anonymous"
+    />
+    <style type="text/css">
+        @import url(https://fonts.googleapis.com/css?family=Martel:400,700);
+        @import url(https://fonts.googleapis.com/css?family=Raleway);
+
+        li {
+            font-size: 24px !important;
+            line-height: 36px !important;
+        }
+        .large {
+            font-size: 24px !important;
+            line-height: 36px !important;
+        }
+        body {
+            font-family: Martel, sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: Raleway, sans-serif;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .bottom {
+            font-size: 16px;
+            float: left;
+            position: fixed;
+            bottom: 50px;
+            padding: 10px;
+        }
+
+        /* Two-column layouts */
+        .left-column {
+            width: 49%;
+            float: left;
+        }
+
+        .right-column {
+            width: 49%;
+            float: right;
+        }
+
+        .left-column-33 {
+            width: 33%;
+            float: left;
+        }
+
+        .right-column-66 {
+            width: 66%;
+            float: right;
+        }
+
+        .right-column ~ p {
+            clear: both;
+        }
+
+        .right-column ~ ul {
+            clear: both;
+        }
+
+        body {
+            counter-reset: footnotecounter;
+            /* Create a footnote counter scope */
+        }
+        span.footnote {
+            text-decoration: none;
+            outline: none;
+        }
+        span.footnote:before {
+            font-size: smaller;
+            margin-left: .5em;
+            vertical-align: super;
+            /* sets the footnote above the baseline */
+            content: counter(footnotecounter);
+            counter-increment: footnotecounter;
+            /* Add 1 to footnote */
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    remark.create({
+        sourceUrl: 'README.md',
+        highlightLanguage: 'bash',
+        highlightStyle: 'darcula',
+        ratio: "16:9"
+    });
+</script>
+</body>
+</html>

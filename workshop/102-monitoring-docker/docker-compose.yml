@@ -1,0 +1,13 @@
+version: "3"
+services:
+  web:
+    image: nginx:1.12-alpine
+    networks:
+      - frontend
+  load:
+    image: russmckendrick/ab
+    command: ["sh",  "-c", "sleep 2 ; ab -k -n 1000000 -c 16 http://web/"]
+    networks:
+      - frontend
+networks:
+  frontend:

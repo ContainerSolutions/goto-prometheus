@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'python-app'
+    static_configs:
+      - targets: ['python-app:5000']
+  - job_name: 'java-app'
+    metrics_path: /prometheus
+    static_configs:
+      - targets: ['java-app:8080']

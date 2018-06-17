@@ -1,0 +1,43 @@
+version: "3"
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - 9090:9090
+    depends_on:
+      - python-app
+      - java-app
+    networks:
+      - network
+  python-app:
+    image: philwinder/prometheus-python
+    ports:
+      - 5000:5000
+    networks:
+      - network
+  java-app:
+    image: philwinder/prometheus-java-spring-boot
+    ports:
+      - 8080:8080
+    networks:
+      - network
+  load-python:
+    image: russmckendrick/ab
+    command: ["sh",  "-c", "sleep 2 ; ab -k -n 1000000 -c 1 http://python-app:5000/slow"]
+    networks:
+      - network
+  load-java:
+    image: russmckendrick/ab
+    command: ["sh",  "-c", "sleep 2 ; ab -k -n 1000000 -c 1 http://java-app:8080/"]
+    networks:
+      - network
+networks:
+  network:
+volumes:
+    prometheus_data: {}
